@@ -47,6 +47,6 @@ Vagrant.configure(2) do |config|
     useradd -g quagga quagga
     progress "... Executing the install script"
     cd fibbingnode
-    sudo bash ./setup.sh
+    sudo bash ./install.sh
   SHELL
 end
