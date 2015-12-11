@@ -12,9 +12,6 @@ Vagrant.configure(2) do |config|
     vb.memory = "1024"
   end
 
-  # std: is not a tty
-  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-
   config.vm.provision "shell", inline: <<-SHELL
     progress() {
         echo "@@ $1"
@@ -36,16 +33,15 @@ Vagrant.configure(2) do |config|
     sudo apt-get install -y git bridge-utils bird python bash \
                             python-dev python-pip gcc build-essential \
                             automake autoconf libtool gawk libreadline-dev \
-                            texinfo console-data
+                            texinfo tmux vim
+    progress "Installing Mininet"
+    git clone https://github.com/mininet/mininet.git
+    ./mininet/util/install.sh -n
 
     clone fibbingnode "the fibbing sources"
     clone labs "the fibbing labs"
 
     progress "Installing the fibbing controller"
-    progress "... Adding quagga user/group"
-    groupadd quagga
-    useradd -g quagga quagga
-    progress "... Executing the install script"
     cd fibbingnode
     sudo bash ./install.sh
   SHELL
