@@ -49,7 +49,7 @@ Vagrant.configure(2) do |config|
     sudo apt-get install -y git bridge-utils bird python bash \
                             python-dev python-pip gcc build-essential \
                             automake autoconf libtool gawk libreadline-dev \
-                            texinfo tmux vim xterm tcpdump wireshark
+                            texinfo tmux vim xterm tcpdump wireshark speedometer
     progress "Installing Mininet"
     git clone https://github.com/mininet/mininet.git
     ./mininet/util/install.sh -n
