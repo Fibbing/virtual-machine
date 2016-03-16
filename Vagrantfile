@@ -22,47 +22,5 @@ Vagrant.configure(2) do |config|
   config.ssh.insert_key = "true"
   config.ssh.forward_x11 = "true"
 
-  config.vm.provision "shell", inline: <<-SHELL
-    cd
-    progress() {
-        echo "@@ $1"
-    }
-    
-    clone() {
-        progress "Cloning $2"
-        if [[ -d "$1" ]]; then
-            cd ${1}
-            git pull
-            cd ..
-        else
-            git clone --recursive "https://github.com/Fibbing/$1"
-        fi
-    }
-
-    progress "Setting up root ssh login"
-    mkdir -p /root/.ssh
-    cat /home/vagrant/.ssh/authorized_keys >> /root/.ssh/authorized_keys
-    chmod 600 /root/.ssh/authorized_keys
-    
-    progress "Installing dependencies"
-    sudo apt-get update
-    sudo apt-get install -y git bridge-utils python bash \
-                            python-dev python-pip gcc build-essential \
-                            automake autoconf libtool gawk libreadline-dev \
-                            texinfo tmux vim xterm tcpdump emacs nano \
-                            speedometer inetutils-inetd python-matplotlib
-    update-inetd --comment-chars '#' --enable discard
-    systemctl enable inetutils-inetd
-
-    progress "Installing Mininet"
-    git clone https://github.com/mininet/mininet.git
-    ./mininet/util/install.sh -n
-
-    clone fibbingnode "the fibbing sources"
-    clone labs "the fibbing labs"
-
-    progress "Installing the fibbing controller"
-    cd fibbingnode
-    sudo bash ./install.sh
-  SHELL
+  config.vm.provision "shell", path: "scripts/provision.sh"
 end
