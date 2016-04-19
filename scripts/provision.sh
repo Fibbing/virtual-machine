@@ -41,6 +41,8 @@ progress "Installing the fibbing controller"
 cd fibbingnode
 sudo bash ./install.sh
 
+[[ $(type -P "ospfd") ]] || echo 'export PATH=/opt/fibbing/sbin:${PATH}' >> /etc/profile
+
 progress "Installing the patched kernel"
 dpkg -i /vagrant/kernel/*.deb
 
