@@ -29,7 +29,7 @@ sudo apt-get -y -qq --force-yes install git bridge-utils python bash \
                         automake autoconf libtool gawk libreadline-dev \
                         texinfo tmux vim xterm tcpdump emacs nano \
                         speedometer inetutils-inetd python-matplotlib \
-                        snmpd snmp snmp-mibs-downloader
+                        snmpd snmp snmp-mibs-downloader vlc
 update-inetd --comment-chars '#' --enable discard
 systemctl enable inetutils-inetd
 downnload-mibs
@@ -37,7 +37,7 @@ downnload-mibs
 sed -i '/^mibs :/s/^/# /' /etc/snmp/snmp.conf
 # Create a 'super' community ... not to be used in production for obvious
 # reasons ...
-echo "rocommunity __fibbing  0.0.0.0/0" >> /etc/snmpd.conf
+echo "rwcommunity __fibbing  0.0.0.0/0" >> /etc/snmpd.conf
 # We don't need that in the root namespace anyway
 update-rc.d -f snmpd remove
 
