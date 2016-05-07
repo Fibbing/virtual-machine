@@ -21,14 +21,25 @@ cat /home/vagrant/.ssh/authorized_keys >> /root/.ssh/authorized_keys
 chmod 600 /root/.ssh/authorized_keys
 
 progress "Installing dependencies"
+# We need non-free for snmp mibs
+sed -i '/^deb /s/$/ non-free/' /etc/apt/sources.list
 sudo apt-get -y -qq --force-yes update
 sudo apt-get -y -qq --force-yes install git bridge-utils python bash \
                         python-dev python-pip gcc build-essential \
                         automake autoconf libtool gawk libreadline-dev \
                         texinfo tmux vim xterm tcpdump emacs nano \
-                        speedometer inetutils-inetd python-matplotlib
+                        speedometer inetutils-inetd python-matplotlib \
+                        snmpd snmp snmp-mibs-downloader
 update-inetd --comment-chars '#' --enable discard
 systemctl enable inetutils-inetd
+downnload-mibs
+# comment that line as we downloaded all mibs
+sed -i '/^mibs :/s/^/# /' /etc/snmp/snmp.conf
+# Create a 'super' community ... not to be used in production for obvious
+# reasons ...
+echo "rocommunity __fibbing  0.0.0.0/0" >> /etc/snmpd.conf
+# We don't need that in the root namespace anyway
+update-rc.d -f snmpd remove
 
 progress "Installing Mininet"
 git clone https://github.com/mininet/mininet.git

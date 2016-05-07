@@ -53,3 +53,6 @@ with what physical interface you specify to be captured by the controller.
 Capturing eth0 (to directly connect to a physical router for example) will
 break your ssh session (if any) and prevent the root network namespace (= where you
 land when accessing the VM via ssh) from accessing the outside networks.
+
+snmpd is available on the VM, and the community `__fibbing` as all access from
+any source prefix.
