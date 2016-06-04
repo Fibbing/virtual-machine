@@ -27,7 +27,7 @@ sudo apt-get -y -qq --force-yes update
 sudo apt-get -y -qq --force-yes install git bridge-utils python bash \
                         python-dev python-pip gcc build-essential \
                         automake autoconf libtool gawk libreadline-dev \
-                        texinfo tmux vim xterm tcpdump emacs nano \
+                        texinfo tmux vim-nox xterm tcpdump emacs nano \
                         speedometer inetutils-inetd python-matplotlib \
                         snmpd snmp snmp-mibs-downloader vlc
 update-inetd --comment-chars '#' --enable discard
