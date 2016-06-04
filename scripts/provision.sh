@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 cd
 progress() {
     echo "@@ $1"
